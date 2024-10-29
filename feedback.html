@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - Chess World</title>
+    <style>
+        body {
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            background-color: #e0f7fa; /* Light blue background */
+            color: #000; /* Black text */
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffcc00; /* Bright yellow */
+            text-align: center;
+            padding: 20px;
+            border-bottom: 5px solid #ff6600; /* Orange border */
+        }
+
+        nav {
+            margin: 10px 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: #0066cc; /* Blue links */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border: 2px dashed #ff6600; /* Orange dashed border */
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        #feedbackList {
+            margin-top: 20px;
+        }
+
+        .feedbackItem {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 10px;
+            position: relative;
+            border-radius: 5px;
+        }
+
+        .reaction {
+            margin-top: 10px;
+        }
+
+        .reaction button {
+            margin-right: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #ffcc00; /* Bright yellow */
+            border-top: 5px solid #ff6600; /* Orange border */
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        #guidelines {
+            background-color: #ffeb3b; /* Light yellow for guidelines */
+            padding: 10px;
+            border: 1px solid #ffcc00; /* Darker yellow border */
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Feedback</h1>
+    <nav>
+        <a href="article.html">Articles</a>
+        <a href="game.html">Play Chess</a>
+        <a href="service.html">Our Services</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="course.html">Courses</a>
+        <a href="donateus.html">Donate</a>
+    </nav>
+</header>
+
+<div class="content">
+    <h2>Share Your Feedback</h2>
+    <div id="guidelines">
+        <strong>Feedback Guidelines:</strong>
+        <ul>
+            <li>Be respectful and constructive.</li>
+            <li>No personal attacks or hate speech.</li>
+            <li>Avoid spam and irrelevant content.</li>
+            <li>Use appropriate language; profanity is not allowed.</li>
+        </ul>
+    </div>
+
+    <div id="userStatus">
+        <span id="usernameDisplay">Anonymous User</span>
+        <button id="loginButton">Login</button>
+        <button id="logoutButton" style="display: none;">Logout</button>
+    </div>
+
+    <textarea id="feedbackInput" placeholder="Type your feedback here..." rows="4" style="width: 100%;"></textarea>
+    <button id="postButton">Post Feedback</button>
+
+    <div id="feedbackList"></div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Chess World. All Rights Reserved.</p>
+</footer>
+
+<script>
+    let feedbacks = JSON.parse(localStorage.getItem('feedbacks')) || [];
+    let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+
+    document.getElementById('loginButton').addEventListener('click', () => {
+        const username = prompt("Enter your username:");
+        if (username && username.trim() !== '') {
+            currentUser = username.trim();
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            updateUserDisplay();
+        }
+    });
+
+    document.getElementById('logoutButton').addEventListener('click', () => {
+        currentUser = null;
+        localStorage.removeItem('currentUser');
+        updateUserDisplay();
+    });
+
+    function updateUserDisplay() {
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        const loginButton = document.getElementById('loginButton');
+        const logoutButton = document.getElementById('logoutButton');
+
+        if (currentUser) {
+            usernameDisplay.textContent = currentUser;
+            loginButton.style.display = 'none';
+            logoutButton.style.display = 'inline';
+        } else {
+            usernameDisplay.textContent = 'Anonymous User';
+            loginButton.style.display = 'inline';
+            logoutButton.style.display = 'none';
+        }
+    }
+
+    function sanitizeInput(input) {
+        const temp = document.createElement('div');
+        temp.textContent = input; // Prevent XSS
+        return temp.innerHTML;
+    }
+
+    function displayFeedback() {
+        const feedbackList = document.getElementById('feedbackList');
+        feedbackList.innerHTML = '';
+
+        feedbacks.forEach((feedback, index) => {
+            const feedbackItem = document.createElement('div');
+            feedbackItem.className = 'feedbackItem';
+            feedbackItem.innerHTML = `
+                <p><strong>${feedback.username}</strong>: ${feedback.text} <small>Posted at: ${feedback.time}</small></p>
+                <div class="reaction">
+                    <button onclick="reactToFeedback(${index}, 'thumbs')">👍</button>
+                    <button onclick="reactToFeedback(${index}, 'heart')">❤️</button>
+                    <button onclick="deleteFeedback(${index})">Delete</button>
+                </div>
+                <p>Reaction: ${feedback.reaction ? feedback.reaction : 'None'}</p>
+            `;
+            feedbackList.appendChild(feedbackItem);
+        });
+    }
+
+    document.getElementById('postButton').addEventListener('click', () => {
+        const feedbackInput = document.getElementById('feedbackInput');
+        const feedbackText = feedbackInput.value;
+
+        if (feedbackText.trim() === '') {
+            alert('Please enter feedback before posting.');
+            return;
+        }
+
+        // Sanitize input
+        const sanitizedText = sanitizeInput(feedbackText);
+        const currentTime = new Date().toLocaleString();
+
+        feedbacks.push({ username: currentUser || 'Anonymous User', text: sanitizedText, time: currentTime, reaction: null });
+        localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+
+        feedbackInput.value = '';
+        displayFeedback();
+
+        alert('Thank you for your feedback!');
+    });
+
+    function reactToFeedback(index, type) {
+        const feedback = feedbacks[index];
+
+        if (feedback.reaction) {
+            alert('You can only give one reaction at a time.');
+            return;
+        }
+
+        feedback.reaction = type === 'thumbs' ? '👍' : '❤️';
+        localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+        displayFeedback();
+    }
+
+    function deleteFeedback(index) {
+        feedbacks.splice(index, 1);
+        localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+        displayFeedback();
+    }
+
+    // Initial display
+    updateUserDisplay();
+    displayFeedback();
+</script>
+
+</body>
+</html>

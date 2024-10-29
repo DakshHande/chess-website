@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Chess World</title>
+    <style>
+        body {
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            background-color: #e0f7fa; /* Light blue background */
+            color: #000; /* Black text */
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffcc00; /* Bright yellow */
+            text-align: center;
+            padding: 20px;
+            border-bottom: 5px solid #ff6600; /* Orange border */
+        }
+
+        nav {
+            margin: 10px 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: #0066cc; /* Blue links */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border: 2px dashed #ff6600; /* Orange dashed border */
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .content h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .content p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #ffcc00; /* Bright yellow */
+            border-top: 5px solid #ff6600; /* Orange border */
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .important {
+            color: red; /* Highlight important information */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Contact Us</h1>
+    <nav>
+        <a href="article.html">Articles</a>
+        <a href="game.html">Play Chess</a>
+        <a href="donateus.html">Donate</a>
+        <a href="about.html">About Us</a>
+        <a href="service.html">Services</a>
+    </nav>
+</header>
+
+<div class="content">
+    <h2>Get in Touch</h2>
+    <p>If you have any questions, feedback, or inquiries, feel free to reach out to us! We value your input and aim to improve our platform continuously.</p>
+    
+    <h2>Reasons to Contact Us</h2>
+    <ul>
+        <li>If you have suggestions for improving our website or services.</li>
+        <li>For technical issues or bugs encountered while using our platform.</li>
+        <li>If you're interested in partnership or collaboration opportunities.</li>
+        <li>For general inquiries regarding our chess resources or community.</li>
+    </ul>
+
+    <h2>Email Us</h2>
+    <p>You can reach us at: <a href="mailto:info@chessworld.com" style="color: #0066cc;">info@chessworld.com</a></p>
+
+    <h2>Follow Us</h2>
+    <p>Stay connected and updated with our latest news and events by following us on our social media channels!</p>
+    <ul>
+        <li><a href="#" style="color: #0066cc;">Facebook</a></li>
+        <li><a href="#" style="color: #0066cc;">Twitter</a></li>
+        <li><a href="#" style="color: #0066cc;">Instagram</a></li>
+    </ul>
+
+    <h2 class="important">Security Notice</h2>
+    <p>Your privacy is important to us. Please do not include sensitive information such as passwords or personal identification numbers in your messages.</p>
+</div>
+
+<footer>
+    <p>&copy; 2024 Chess World. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // Simple protection layer against unwanted scripts
+    document.addEventListener('DOMContentLoaded', () => {
+        const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+        emailLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                const userConfirmation = confirm('You are about to send an email. Do you wish to proceed?');
+                if (!userConfirmation) {
+                    event.preventDefault(); // Prevent default behavior if the user cancels
+                }
+            });
+        });
+    });
+
+    // External protection (basic, for illustration)
+    const checkUserAgent = () => {
+        const userAgent = navigator.userAgent.toLowerCase();
+        if (userAgent.includes('evilbot')) {
+            alert('Access Denied: Your user agent is blocked.');
+            // Optionally redirect or take further action
+        }
+    };
+
+    // Call the function to check user agent
+    checkUserAgent();
+</script>
+
+</body>
+</html>

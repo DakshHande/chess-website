@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate - Chess World</title>
+    <style>
+        body {
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            background-color: #e0f7fa; /* Light blue background */
+            color: #000; /* Black text */
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffcc00; /* Bright yellow */
+            text-align: center;
+            padding: 20px;
+            border-bottom: 5px solid #ff6600; /* Orange border */
+        }
+
+        nav {
+            margin: 10px 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: #0066cc; /* Blue links */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border: 2px dashed #ff6600; /* Orange dashed border */
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .content h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .content p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #ffcc00; /* Bright yellow */
+            border-top: 5px solid #ff6600; /* Orange border */
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .important {
+            color: red; /* Highlight important information */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Donate to Chess World</h1>
+    <nav>
+        <a href="article.html">Articles</a>
+        <a href="game.html">Play Chess</a>
+        <a href="donateus.html">Donate</a>
+        <a href="about.html">About Us</a>
+        <a href="service.html">Services</a>
+    </nav>
+</header>
+
+<div class="content">
+    <h2>Why Donate?</h2>
+    <p>Your donations help us provide quality chess education, resources, and support to aspiring players. Here's how your contributions make a difference:</p>
+    <ul>
+        <li><strong>Training Programs:</strong> Funding allows us to organize training camps and workshops with expert coaches.</li>
+        <li><strong>Resources:</strong> Donations help us purchase educational materials and tools for our community.</li>
+        <li><strong>Scholarships:</strong> Contributions fund scholarships for talented players who cannot afford coaching.</li>
+        <li><strong>Community Events:</strong> Your support helps us host tournaments and events to promote chess.</li>
+    </ul>
+
+    <h2>How Your Money is Used</h2>
+    <p>Every donation is utilized responsibly. Here’s a breakdown of where your money goes:</p>
+    <ol>
+        <li>40% - Coaching and Training</li>
+        <li>30% - Event Organization</li>
+        <li>20% - Educational Materials</li>
+        <li>10% - Administrative Costs</li>
+    </ol>
+
+    <h2>How to Donate</h2>
+    <p>Donating is easy! Simply click the button below:</p>
+    <button onclick="startDonation()">Donate Now</button>
+
+    <h2 class="important">Security Notice</h2>
+    <p>Please be assured that your information will be kept secure. We take the following measures:</p>
+    <h3>Deep JavaScript Safety Procedures</h3>
+    <p>We implement multiple layers of security, including:</p>
+    <ul>
+        <li><strong>Data Encryption:</strong> All sensitive data is encrypted during transmission using HTTPS protocols.</li>
+        <li><strong>Validation:</strong> Input fields are validated on the client-side to prevent injection attacks.</li>
+        <li><strong>Session Management:</strong> We use secure tokens for managing user sessions to mitigate session hijacking.</li>
+    </ul>
+
+    <h3>Internal and External Safety JavaScript</h3>
+    <p>Our JavaScript includes:</p>
+    <ul>
+        <li><strong>Sanitization:</strong> All inputs are sanitized to prevent XSS (Cross-Site Scripting) attacks.</li>
+        <li><strong>Captcha:</strong> We utilize captcha to prevent automated bots from submitting donation forms.</li>
+        <li><strong>Logging:</strong> All suspicious activities are logged for monitoring and review.</li>
+    </ul>
+</div>
+
+<footer>
+    <p>&copy; 2024 Chess World. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // Internal security measure to confirm donation
+    const startDonation = () => {
+        const userConfirmation = confirm('Are you sure you want to proceed with the donation?');
+        if (userConfirmation) {
+            window.location.href = 'payment.html'; // Redirect to payment page
+        } else {
+            alert('Donation canceled.');
+        }
+    };
+
+    // External security measure to prevent unwanted actions
+    const checkUserAgent = () => {
+        const userAgent = navigator.userAgent.toLowerCase();
+        if (userAgent.includes('evilbot')) {
+            alert('Access Denied: Your user agent is blocked.');
+            // Optionally redirect or take further action
+        }
+    };
+
+    // Call the function to check user agent
+    checkUserAgent();
+</script>
+
+</body>
+</html>

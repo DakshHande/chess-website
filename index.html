@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess World - Home</title>
+    <style>
+        body {
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            background-color: #e0f7fa; /* Light blue background */
+            color: #000; /* Black text */
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffcc00; /* Bright yellow */
+            text-align: center;
+            padding: 20px;
+            border-bottom: 5px solid #ff6600; /* Orange border */
+        }
+
+        nav {
+            margin: 10px 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: #0066cc; /* Blue links */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .content {
+            text-align: center;
+            margin: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .user-account {
+            margin: 20px auto;
+            padding: 15px;
+            border: 2px solid #ff6600; /* Orange border */
+            border-radius: 8px;
+            display: inline-block;
+            background: #fff;
+        }
+
+        button {
+            background-color: #ff6600; /* Orange */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #ff4500; /* Darker orange */
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #ffcc00; /* Bright yellow */
+            border-top: 5px solid #ff6600; /* Orange border */
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: #ff0000; /* Red for emphasis */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome to Chess World</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="game.html">Play Chess</a>
+        <a href="service.html">Our Services</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="course.html">Courses</a>
+        <a href="donate.html">Donate</a>
+        <a href="feedback.html">Feedback</a>
+        <a href="article.html">Articles</a>
+        <a href="signup.html">Signup</a>
+    </nav>
+</header>
+
+<div class="content">
+    <h2>Chess World Community</h2>
+    <p>Join our community of chess enthusiasts! Here, you can improve your skills, participate in exciting games, and connect with fellow players from around the globe.</p>
+    
+    <p>Whether you're a beginner looking to learn the basics or an advanced player seeking competitive play, Chess World has something for everyone. Our platform offers:</p>
+    <ul>
+        <li><strong>Live Chess Matches:</strong> Play with the board in real-time.</li>
+        <li><strong>Chess Tutorials:</strong> Access video tutorials to enhance your gameplay.</li>
+        <li><strong>Feedback:</strong> Engage with feedback and help us improve ourselves.</li>
+        <li><strong>Regular Tournaments:</strong> Participate in our monthly tournaments to win exciting prizes on lichess.org team ZugzwangWarriors!</li>
+    </ul>
+    
+    <p>Your security is our priority! We have implemented measures to protect your account and personal data. Our team respects and safeguards your privacy.</p>
+
+    <p>In our community, we believe in fostering a safe and supportive environment. That's why we've added features like account suspension and neutral status to ensure your account is protected in times of need.</p>
+
+    <!-- User Account Section -->
+    <div class="user-account" id="userAccount">
+        <h3>User Account</h3>
+        <p id="welcomeMessage">Welcome, <span id="usernameDisplay">Guest</span>!</p>
+        <button id="settingsButton" style="display:none;">Account Settings</button>
+        <button id="deleteButton" style="display:none;">Delete Account</button>
+        <button id="suspendButton" style="display:none;">Suspend Account</button>
+        <button id="neutralButton" style="display:none;">Neutral Account</button>
+        <button id="signupButton" onclick="window.location.href='signup.html';">Signup</button>
+        <div id="suspensionTimer" class="timer" style="display:none;"></div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Chess World. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // Check if user is registered
+    const registeredUsername = localStorage.getItem('username');
+    let accountStatus = 'active'; // To track account status: active, suspended, or neutral
+    
+    if (registeredUsername) {
+        document.getElementById('usernameDisplay').innerText = registeredUsername;
+        document.getElementById('welcomeMessage').innerText = `Welcome, ${registeredUsername}!`;
+        document.getElementById('settingsButton').style.display = 'inline-block';
+        document.getElementById('deleteButton').style.display = 'inline-block';
+        document.getElementById('suspendButton').style.display = 'inline-block';
+        document.getElementById('neutralButton').style.display = 'inline-block';
+        document.getElementById('signupButton').style.display = 'none';
+    }
+
+    // Event listener for deleting account
+    document.getElementById('deleteButton').addEventListener('click', function() {
+        if (accountStatus !== 'active') {
+            alert(`Your account cannot be deleted while it is in ${accountStatus} status.`);
+            return;
+        }
+        const confirmed = confirm('Are you sure you want to delete your account? This action cannot be undone.');
+        if (confirmed) {
+            localStorage.removeItem('username');
+            localStorage.removeItem('email');
+            localStorage.removeItem('password');
+            alert('Your account has been deleted.');
+            window.location.reload(); // Refresh the page to update UI
+        }
+    });
+
+    // Event listener for account settings (redirect to settings page)
+    document.getElementById('settingsButton').addEventListener('click', function() {
+        alert('Account settings will be implemented soon!'); // Placeholder for future settings page
+    });
+
+    // Event listener for suspending account
+    document.getElementById('suspendButton').addEventListener('click', function() {
+        if (accountStatus !== 'active') {
+            alert(`Your account is already in ${accountStatus} status.`);
+            return;
+        }
+        alert('Your account will be suspended for 10 minutes.');
+        accountStatus = 'suspended';
+        document.getElementById('suspensionTimer').style.display = 'block';
+        let timeLeft = 600; // 10 minutes in seconds
+        const timer = setInterval(function() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('suspensionTimer').innerText = `Suspension time remaining: ${minutes}m ${seconds}s`;
+            timeLeft--;
+
+            if (timeLeft < 0) {
+                clearInterval(timer);
+                accountStatus = 'active'; // Reset account status
+                document.getElementById('suspensionTimer').innerText = 'Your suspension period is over. You can log in again.';
+            }
+        }, 1000);
+    });
+
+    // Event listener for setting account to neutral
+    document.getElementById('neutralButton').addEventListener('click', function() {
+        if (accountStatus !== 'active') {
+            alert(`Your account is already in ${accountStatus} status.`);
+            return;
+        }
+        alert('Your account has been set to neutral status for 10 minutes.');
+        accountStatus = 'neutral';
+        document.getElementById('suspensionTimer').style.display = 'block';
+        let timeLeft = 600; // 10 minutes in seconds
+        const timer = setInterval(function() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('suspensionTimer').innerText = `Neutral time remaining: ${minutes}m ${seconds}s`;
+            timeLeft--;
+
+            if (timeLeft < 0) {
+                clearInterval(timer);
+                accountStatus = 'active'; // Reset account status
+                document.getElementById('suspensionTimer').innerText = 'Your neutral period is over. You can log in again.';
+            }
+        }, 1000);
+    });
+</script>
+</body>
+</html>

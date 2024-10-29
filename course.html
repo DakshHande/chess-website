@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - Chess World</title>
+    <style>
+        body {
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            background-color: #e0f7fa; /* Light blue background */
+            color: #000; /* Black text */
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffcc00; /* Bright yellow */
+            text-align: center;
+            padding: 20px;
+            border-bottom: 5px solid #ff6600; /* Orange border */
+        }
+
+        nav {
+            margin: 10px 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: #0066cc; /* Blue links */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border: 2px dashed #ff6600; /* Orange dashed border */
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .content h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .content p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .course {
+            margin-bottom: 20px;
+            border: 1px solid #ff6600; /* Orange border */
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #ffcc00; /* Bright yellow */
+            border-top: 5px solid #ff6600; /* Orange border */
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .important {
+            color: red; /* Highlight important information */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Our Courses</h1>
+    <nav>
+        <a href="article.html">Articles</a>
+        <a href="game.html">Play Chess</a>
+        <a href="donateus.html">Donate</a>
+        <a href="about.html">About Us</a>
+        <a href="service.html">Services</a>
+    </nav>
+</header>
+
+<div class="content">
+    <h2>Explore Our Courses</h2>
+    <p>We offer a variety of courses to help you improve your chess skills, from beginner to advanced levels. Each course includes comprehensive lessons and video tutorials. Below is the list of available courses:</p>
+
+    <div class="course">
+        <h3>1. Chess Basics</h3>
+        <p>This course covers the fundamental rules of chess, including piece movement, basic strategies, and game etiquette.</p>
+        <a href="https://www.youtube.com/watch?v=example1" target="_blank">Watch Video</a>
+    </div>
+
+    <div class="course">
+        <h3>2. Opening Strategies</h3>
+        <p>Learn the most effective opening strategies to gain an advantage right from the start of the game.</p>
+        <a href="https://www.youtube.com/watch?v=example2" target="_blank">Watch Video</a>
+    </div>
+
+    <div class="course">
+        <h3>3. Mid-Game Tactics</h3>
+        <p>This course dives into tactics that can be utilized during the mid-game, such as pins, forks, and discovered attacks.</p>
+        <a href="https://www.youtube.com/watch?v=example3" target="_blank">Watch Video</a>
+    </div>
+
+    <div class="course">
+        <h3>4. Endgame Techniques</h3>
+        <p>Master the art of endgame strategies, including king and pawn endings and how to convert material advantage into victory.</p>
+        <a href="https://www.youtube.com/watch?v=example4" target="_blank">Watch Video</a>
+    </div>
+
+    <div class="course">
+        <h3>5. Chess Puzzles</h3>
+        <p>Improve your tactical skills by solving a variety of chess puzzles that challenge your creativity and critical thinking.</p>
+        <a href="https://www.youtube.com/watch?v=example5" target="_blank">Watch Video</a>
+    </div>
+
+    <div class="course">
+        <h3>6. Chess History</h3>
+        <p>Explore the rich history of chess, including famous players, landmark games, and significant developments in strategy.</p>
+        <a href="https://www.youtube.com/watch?v=example6" target="_blank">Watch Video</a>
+    </div>
+
+    <div class="course">
+        <h3>7. Advanced Openings</h3>
+        <p>Dive deeper into advanced opening theories and learn how to outsmart your opponent from the very first move.</p>
+        <a href="https://www.youtube.com/watch?v=example7" target="_blank">Watch Video</a>
+    </div>
+
+    <div class="course">
+        <h3>8. Psychology in Chess</h3>
+        <p>Understand the psychological aspects of chess and how to manage emotions and stress during competitive play.</p>
+        <a href="https://www.youtube.com/watch?v=example8" target="_blank">Watch Video</a>
+    </div>
+
+    <div class="course">
+        <h3>9. Chess Software and Analysis</h3>
+        <p>Learn how to use chess software to analyze your games, explore databases, and improve your playing strength.</p>
+        <a href="https://www.youtube.com/watch?v=example9" target="_blank">Watch Video</a>
+    </div>
+
+    <div class="course">
+        <h3>10. Tournament Preparation</h3>
+        <p>This course provides insights on how to prepare for chess tournaments, including strategies for effective study and practice.</p>
+        <a href="https://www.youtube.com/watch?v=example10" target="_blank">Watch Video</a>
+    </div>
+
+    <h2 class="important">Security Notice</h2>
+    <p>Please note that while we strive to provide a secure environment, avoid sharing sensitive information through our platform.</p>
+</div>
+
+<footer>
+    <p>&copy; 2024 Chess World. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // Internal protection against unwanted scripts
+    document.addEventListener('DOMContentLoaded', () => {
+        const courseLinks = document.querySelectorAll('a[target="_blank"]');
+        courseLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                const userConfirmation = confirm('You are about to leave this site. Do you wish to proceed?');
+                if (!userConfirmation) {
+                    event.preventDefault(); // Prevent default behavior if the user cancels
+                }
+            });
+        });
+    });
+
+    // External protection layer
+    const checkUserAgent = () => {
+        const userAgent = navigator.userAgent.toLowerCase();
+        if (userAgent.includes('evilbot')) {
+            alert('Access Denied: Your user agent is blocked.');
+            // Optionally redirect or take further action
+        }
+    };
+
+    // Call the function to check user agent
+    checkUserAgent();
+</script>
+
+</body>
+</html>
+

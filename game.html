@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(8, 60px);
+            grid-template-rows: repeat(8, 60px);
+            gap: 0;
+            border: 2px solid #333;
+            margin-top: 20px;
+        }
+
+        .cell {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            cursor: pointer;
+        }
+
+        .cell.light {
+            background-color: #eee;
+        }
+
+        .cell.dark {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Chess Game</h1>
+<div id="board" class="board"></div>
+<div class="controls">
+    <button onclick="resetGame()">Reset Game</button>
+</div>
+
+<script>
+    const boardElement = document.getElementById('board');
+    let board = Array(8).fill(null).map(() => Array(8).fill(null));
+    let selectedPiece = null;
+    let turn = 'white';
+
+    // Initialize the chessboard with pieces
+    const initialBoardSetup = [
+        ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'],
+        ['♟', '♟', '♟', '♟', '♟', '♟', '♟', '♟'],
+        [null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null],
+        ['♙', '♙', '♙', '♙', '♙', '♙', '♙', '♙'],
+        ['♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖']
+    ];
+
+    function resetGame() {
+        board = JSON.parse(JSON.stringify(initialBoardSetup));
+        turn = 'white';
+        renderBoard();
+    }
+
+    function renderBoard() {
+        boardElement.innerHTML = '';
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                const cell = document.createElement('div');
+                cell.className = `cell ${(row + col) % 2 === 0 ? 'light' : 'dark'}`;
+                cell.textContent = board[row][col] || '';
+                cell.dataset.row = row;
+                cell.dataset.col = col;
+                cell.onclick = () => onCellClick(row, col);
+                boardElement.appendChild(cell);
+            }
+        }
+    }
+
+    function onCellClick(row, col) {
+        const piece = board[row][col];
+        if (selectedPiece) {
+            if (isLegalMove(selectedPiece.row, selectedPiece.col, row, col)) {
+                movePiece(selectedPiece.row, selectedPiece.col, row, col);
+                selectedPiece = null;
+                switchTurn();
+            } else {
+                selectedPiece = null;  // Deselect if invalid move
+            }
+        } else if (piece && isPieceTurn(piece)) {
+            selectedPiece = { row, col };
+        }
+        renderBoard();
+    }
+
+    function movePiece(fromRow, fromCol, toRow, toCol) {
+        board[toRow][toCol] = board[fromRow][fromCol];
+        board[fromRow][fromCol] = null;
+    }
+
+    function isPieceTurn(piece) {
+        return (turn === 'white' && '♙♖♘♗♕♔'.includes(piece)) ||
+               (turn === 'black' && '♟♜♞♝♛♚'.includes(piece));
+    }
+
+    function isLegalMove(fromRow, fromCol, toRow, toCol) {
+        const piece = board[fromRow][fromCol];
+        const target = board[toRow][toCol];
+        if (target && isPieceTurn(target)) return false;
+        switch (piece) {
+            case '♙':
+            case '♟':
+                return isLegalPawnMove(fromRow, fromCol, toRow, toCol, piece);
+            case '♖':
+            case '♜':
+                return isLegalRookMove(fromRow, fromCol, toRow, toCol);
+            case '♘':
+            case '♞':
+                return isLegalKnightMove(fromRow, fromCol, toRow, toCol);
+            case '♗':
+            case '♝':
+                return isLegalBishopMove(fromRow, fromCol, toRow, toCol);
+            case '♕':
+            case '♛':
+                return isLegalQueenMove(fromRow, fromCol, toRow, toCol);
+            case '♔':
+            case '♚':
+                return isLegalKingMove(fromRow, fromCol, toRow, toCol);
+        }
+        return false;
+    }
+
+    function isLegalPawnMove(fromRow, fromCol, toRow, toCol, piece) {
+        const direction = piece === '♙' ? -1 : 1;
+        const startRow = piece === '♙' ? 6 : 1;
+        if (fromCol === toCol) {
+            if ((fromRow + direction === toRow && !board[toRow][toCol]) ||
+                (fromRow === startRow && fromRow + 2 * direction === toRow && !board[toRow][toCol])) {
+                return true;
+            }
+        } else if (Math.abs(fromCol - toCol) === 1 && fromRow + direction === toRow && board[toRow][toCol]) {
+            return true;
+        }
+        return false;
+    }
+
+    function isLegalRookMove(fromRow, fromCol, toRow, toCol) {
+        if (fromRow !== toRow && fromCol !== toCol) return false;
+        const stepRow = fromRow === toRow ? 0 : fromRow < toRow ? 1 : -1;
+        const stepCol = fromCol === toCol ? 0 : fromCol < toCol ? 1 : -1;
+        for (let i = 1; i < Math.max(Math.abs(toRow - fromRow), Math.abs(toCol - fromCol)); i++) {
+            if (board[fromRow + i * stepRow][fromCol + i * stepCol]) return false;
+        }
+        return true;
+    }
+
+    function isLegalKnightMove(fromRow, fromCol, toRow, toCol) {
+        const rowDiff = Math.abs(toRow - fromRow);
+        const colDiff = Math.abs(toCol - fromCol);
+        return rowDiff === 2 && colDiff === 1 || rowDiff === 1 && colDiff === 2;
+    }
+
+    function isLegalBishopMove(fromRow, fromCol, toRow, toCol) {
+        if (Math.abs(toRow - fromRow) !== Math.abs(toCol - fromCol)) return false;
+        const stepRow = fromRow < toRow ? 1 : -1;
+        const stepCol = fromCol < toCol ? 1 : -1;
+        for (let i = 1; i < Math.abs(toRow - fromRow); i++) {
+            if (board[fromRow + i * stepRow][fromCol + i * stepCol]) return false;
+        }
+        return true;
+    }
+
+    function isLegalQueenMove(fromRow, fromCol, toRow, toCol) {
+        return isLegalRookMove(fromRow, fromCol, toRow, toCol) || isLegalBishopMove(fromRow, fromCol, toRow, toCol);
+    }
+
+    function isLegalKingMove(fromRow, fromCol, toRow, toCol) {
+        return Math.abs(toRow - fromRow) <= 1 && Math.abs(toCol - fromCol) <= 1;
+    }
+
+    function switchTurn() {
+        turn = turn === 'white' ? 'black' : 'white';
+    }
+
+    resetGame();
+</script>
+
+</body>
+</html>
